@@ -1,7 +1,7 @@
 var video = document.querySelector('.video');
 var bar = document.querySelector('.timestamp');
 var progress = document.querySelector('.timestamp');
-var btn = document.getElementById('play-pause');
+var btn = document.getElementById('.play-pause');
 var currentTimeElement = document.querySelector('.current');
 var durationTimeElememnt = document.querySelector('.duration');
 
