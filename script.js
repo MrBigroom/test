@@ -17,10 +17,6 @@ function togglePlayPause() {
     }
 }
 
-btn.onclick = function() {
-    togglePlayPause();
-}
-
 //video progress bar
 video.addEventListener('timeupdate', function() {
     var barPosition = video.currentTime / video.duration;
@@ -29,12 +25,6 @@ video.addEventListener('timeupdate', function() {
     if(video.ended) {
         btn.className = "play";
     }
-})
-
-//interactive progress bar
-progress.addEventListener('click', (e) => {
-    var progressTime = (e.offsetX  /progress.offsetWidth) * video.duration;
-    video.currentTime = progressTime;
 })
 
 //current time & duration
@@ -48,4 +38,5 @@ var currentTime = () => {
     durationTimeElememnt.innerHTML = `${durationMinutes}:${durationSeconds}`;
 }
 
-video.addEventListener('click', togglePlayPause)
+video.addEventListener('click', togglePlayPause);
+btn.addEventListener('click', togglePlayPause);
