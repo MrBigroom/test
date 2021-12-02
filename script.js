@@ -48,5 +48,4 @@ var currentTime = () => {
     durationTimeElememnt.innerHTML = `${durationMinutes}:${durationSeconds}`;
 }
 
-video.addEventListener('click', togglePlayPause);
-video.addEventListener('timeupdate', currentTime);
+video.addEventListener('click', togglePlayPause)
