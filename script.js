@@ -1,42 +1,56 @@
-var video = document.querySelector('.video');
-var bar = document.querySelector('.timestamp');
-var progress = document.querySelector('.timestamp');
-var btn = document.getElementById('.play-pause');
-var currentTimeElement = document.querySelector('.current');
-var durationTimeElememnt = document.querySelector('.duration');
+const video = document.getElementById('video');
+const play = document.getElementById('play');
+const progress = document.getElementById('progress');
+const timestamp = document.getElementById('timestamp');
 
-//play & pause button
-function togglePlayPause() {
-    if(video.paused) {
-        btn.className = 'pause';
-        video.play();
-    }
-    else {
-        btn.className = 'play';
-        video.pause();
-    }
+// Play & pause video
+function toggleVideoStatus() {
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
 }
 
-//video progress bar
-video.addEventListener('timeupdate', function() {
-    var barPosition = video.currentTime / video.duration;
-    bar.style.width = barPosition * 100 + "%";
-
-    if(video.ended) {
-        btn.className = "play";
-    }
-})
-
-//current time & duration
-var currentTime = () => {
-    let currentMinutes = Math.floor(video.currentTime / 60);
-    let currentSeconds = Math.floor(video.currentTime - currentMinutes * 60);
-    let durationMinutes = Math.floor(video.duration / 60);
-    let durationSeconds = Math.floor(video.duration - durationMinutes * 60);
-
-    currentTimeElement.innerHTML = `${currentMinutes}:${currentSeconds < 10 ? '0'+currentSeconds : currentSeconds}`;
-    durationTimeElememnt.innerHTML = `${durationMinutes}:${durationSeconds}`;
+// update play/pause icon
+function updatePlayIcon() {
+  if (video.paused) {
+    play.innerHTML = '<i class="fa fa-play fa-2x"></i>';
+  } else {
+    play.innerHTML = '<i class="fa fa-pause fa-2x"></i>';
+  }
 }
 
-video.addEventListener('click', togglePlayPause);
-btn.addEventListener('click', togglePlayPause);
+// Update progress & timestamp
+function updateProgress() {
+  progress.value = (video.currentTime / video.duration) * 100;
+
+  // Get minutes
+  let mins = Math.floor(video.currentTime / 60);
+  if (mins < 10) {
+    mins = '0' + String(mins);
+  }
+
+  // Get seconds
+  let secs = Math.floor(video.currentTime % 60);
+  if (secs < 10) {
+    secs = '0' + String(secs);
+  }
+
+  timestamp.innerHTML = `${mins}:${secs}`;
+}
+
+// Set video time to progress
+function setVideoProgress() {
+  video.currentTime = (+progress.value * video.duration) / 100;
+}
+
+// Event listeners
+video.addEventListener('click', toggleVideoStatus);
+video.addEventListener('pause', updatePlayIcon);
+video.addEventListener('play', updatePlayIcon);
+video.addEventListener('timeupdate', updateProgress);
+
+play.addEventListener('click', toggleVideoStatus);
+
+progress.addEventListener('change', setVideoProgress);
